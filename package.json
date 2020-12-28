@@ -13,8 +13,11 @@
   "devDependencies": {},
   "dependencies": {
     "@actions/core": "^1.2.6",
+    "@actions/exec": "^1.0.4",
+    "@actions/io": "^1.0.2",
     "@applitools/eyes-cypress": "^3.17.0",
     "cypress": "^6.2.0",
-    "sitemap-generator-cli": "^7.5.0"
+    "sitemap-generator": "^8.5.1",
+    "xml2js": "^0.4.23"
   }
 }
