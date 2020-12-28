@@ -6,9 +6,15 @@
   "repository": "git@github.com:colbyfayock/applitools-eyes-action.git",
   "author": "Colby Fayock <fayock@gmail.com>",
   "license": "MIT",
-  "scripts": {},
-  "devDependencies": {
+  "scripts": {
+    "crawl": "sitemap-generator-cli",
+    "test": "cypress run"
+  },
+  "devDependencies": {},
+  "dependencies": {
     "@actions/core": "^1.2.6",
-    "@vercel/ncc": "^0.26.1"
+    "@applitools/eyes-cypress": "^3.17.0",
+    "cypress": "^6.2.0",
+    "sitemap-generator-cli": "^7.5.0"
   }
 }
