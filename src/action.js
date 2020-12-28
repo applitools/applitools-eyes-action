@@ -98,14 +98,6 @@ async function run() {
   const url = 'https://colbyfayock.com';
   const key = 'TESTINGARANDOMKEY';
   let sitemap;
-  
-  try {
-    core.debug('Setting up Applitools Eyes integration');
-    await exec.exec('npx eyes-setup');
-  } catch(e) {
-    console.log(e);
-    return;
-  }
 
   try {
     core.debug(`Crawling ${url}`);
