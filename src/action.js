@@ -131,7 +131,8 @@ async function run() {
       //       .map((selector) => ({ selector: selector.trim() }))
       //   : [],
       APPLITOOLS_CONCURRENCY: 5, // inputs.concurrency,
-      PAGES_TO_CHECK: sitemap
+      PAGES_TO_CHECK: sitemap,
+      CYPRESS_CACHE_FOLDER: '/github/home/.cache/Cypress'
     },
     record: false,
   });    
