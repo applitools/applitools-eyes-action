@@ -7,7 +7,7 @@
   "author": "Colby Fayock <fayock@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "crawl": "sitemap-generator-cli",
+    "crawl": "sitemap-generator https://colbyfayock.com",
     "test": "cypress run"
   },
   "devDependencies": {},
