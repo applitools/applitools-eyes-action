@@ -1,5 +1,5 @@
 FROM node:slim
 
-RUN npm ci
+RUN npm install --production
 
 ENTRYPOINT ["node", "/src/action.js"]
