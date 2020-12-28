@@ -1,0 +1,14 @@
+{
+  "name": "applitools-eyes-action",
+  "version": "1.0.0",
+  "description": "Applitools Eyes GitHub Action",
+  "main": "dist/index.js",
+  "repository": "git@github.com:colbyfayock/applitools-eyes-action.git",
+  "author": "Colby Fayock <fayock@gmail.com>",
+  "license": "MIT",
+  "scripts": {},
+  "devDependencies": {
+    "@actions/core": "^1.2.6",
+    "@vercel/ncc": "^0.26.1"
+  }
+}

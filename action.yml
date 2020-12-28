@@ -1,0 +1,7 @@
+name: github-actions-applitools-eyes
+description: 'Applitools Eyes GitHub Action'
+author: 'Colby Fayock <hello@colbyfayock.com>'
+
+runs:
+  using: docker
+  image: Dockerfile
