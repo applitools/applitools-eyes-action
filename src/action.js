@@ -132,7 +132,7 @@ async function run() {
       //   : [],
       APPLITOOLS_CONCURRENCY: 5, // inputs.concurrency,
       PAGES_TO_CHECK: sitemap,
-      CYPRESS_CACHE_FOLDER: '/github/home/.cache/Cypress'
+      CYPRESS_CACHE_FOLDER: '/root/.cache/Cypress'
     },
     record: false,
   });    
