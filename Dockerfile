@@ -1,4 +1,4 @@
-FROM node:slim
+FROM cypress/base:12
 
 COPY . .
 
