@@ -41,6 +41,7 @@ async function run() {
 
   let sitemap;
 
+  core.debug('testing');
   try {
     core.debug(`Crawling ${baseUrl}`);
     sitemap = await promiseToCrawl({
