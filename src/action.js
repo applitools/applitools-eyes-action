@@ -16,9 +16,9 @@ async function run() {
   
 
   fs.readdir(__dirname, (err, files) => {
-    console.log('__dirname', __dirname);
+    core.debug('__dirname', __dirname);
     files.forEach(file => {
-      console.log('file', file);
+      core.debug('file', file);
     });
   });
 
