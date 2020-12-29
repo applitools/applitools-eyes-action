@@ -1,9 +1,10 @@
 FROM cypress/base:12
-RUN --mount=type=cache,target=/github/home/.cache/Cypress
 
+WORKDIR .
 COPY . .
 
-ENV CYPRESS_CACHE_FOLDER /github/home/.cache/Cypress
+ENV NPM_CACHE_FOLDER=/root/.cache/npm
+ENV CYPRESS_CACHE_FOLDER=/root/.cache/Cypress
 
 RUN npm ci
 

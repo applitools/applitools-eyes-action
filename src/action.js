@@ -112,9 +112,6 @@ async function run() {
 
   console.log('sitemap', sitemap);
 
-  core.exportVariable('TEST_KEY', 'testing');
-
-  core.setSecret(key);
   core.exportVariable('APPLITOOLS_API_KEY', key);
 
   const results = await cypress.run({
@@ -131,8 +128,7 @@ async function run() {
       //       .map((selector) => ({ selector: selector.trim() }))
       //   : [],
       APPLITOOLS_CONCURRENCY: 5, // inputs.concurrency,
-      PAGES_TO_CHECK: sitemap,
-      CYPRESS_CACHE_FOLDER: '/root/.cache/Cypress'
+      PAGES_TO_CHECK: sitemap
     },
     record: false,
   });    
