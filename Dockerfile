@@ -10,4 +10,4 @@ COPY . .
 
 RUN npm ci
 
-ENTRYPOINT ["node", "/applitools-eyes-action/src/action.js"]
+ENTRYPOINT ["node", "/src/action.js"]

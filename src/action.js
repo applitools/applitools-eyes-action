@@ -9,6 +9,8 @@ const { promiseToCrawl } = require('./lib/util');
 
 async function run() {
   const key = core.getInput('APPLITOOLS_API_KEY') || process.env.APPLITOOLS_API_KEY;
+  exec.exec('echo $(pwd)')
+  exec.exec('echo $(ls -la)')
 
   if ( !key ) {
     throw new Error(`Invalid API key: did you remember to set the APPLITOOLS_API_KEY option?`)
