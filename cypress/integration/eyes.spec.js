@@ -1,24 +1,22 @@
-describe('check the site for visual regressions', () => {
+/// <reference types="Cypress" />
+
+describe('Visual Regression Tests', () => {
   const pagesToCheck = Cypress.env('PAGES_TO_CHECK');
 
   pagesToCheck.forEach((route) => {
     it(`Visual Diff for ${route}`, () => {
 
       cy.eyesOpen({
-        appName: process.env.SITE_NAME || 'localhost-test',
-        batchName: process.env.SITE_NAME || 'localhost-test',
-        // browser: JSON.parse(Cypress.env('APPLITOOLS_BROWSERS')),
-        // failBuildOnDiff: Boolean(Cypress.env('APPLITOOLS_FAIL_BUILD_ON_DIFF')),
-        // serverUrl: Cypress.env('APPLITOOLS_SERVER_URL'),
+        appName: process.env.APPLITOOLS_APP_NAME,
+        batchName: process.env.BATCH_APP_NAME,
         concurrency: Number(Cypress.env('APPLITOOLS_CONCURRENCY')),
+        serverUrl: Cypress.env('APPLITOOLS_SERVER_URL'),
       });
 
-      // const selector = Cypress.env('APPLITOOLS_IGNORE_SELECTOR');
       cy.visit(route);
       
       cy.eyesCheckWindow({
-        tag: route,
-        // ignore: Cypress.env('APPLITOOLS_IGNORE_SELECTOR'),
+        tag: route
       });
 
       cy.eyesClose();

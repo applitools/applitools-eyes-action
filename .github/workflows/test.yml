@@ -15,4 +15,5 @@ jobs:
     - uses: './'
       with:
         APPLITOOLS_API_KEY: ${{secrets.APPLITOOLS_API_KEY}}
-        url: https://colbyfayock.com
+        appName: 'Colby Fayock Web'
+        baseUrl: https://colbyfayock.com
