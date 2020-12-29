@@ -5,3 +5,12 @@ author: 'Colby Fayock <hello@colbyfayock.com>'
 runs:
   using: docker
   image: Dockerfile
+
+inputs:
+  APPLITOOLS_API_KEY:
+    description: 'Unique API key from your Applitools account'
+  url:
+    description: 'The website URL to be craweled for visual regression testing'
+  maxDepth:
+    description: 'How many steps deep do you want to crawl the given website?'
+    default: 1

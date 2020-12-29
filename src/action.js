@@ -30,7 +30,7 @@ function promiseToConvertXmlToJson(xml) {
  * promiseToCrawl
  */
 
-function promiseToCrawl({ url, depth }) {
+function promiseToCrawl({ url, maxDepth }) {
   const errorBase = `Failed to crawl url ${url}`;
   return new Promise((resolve, reject) => {
     const filepath = `${SITEMAP_FILE_LOCATION}${SITEMAP_FILENAME}`;
@@ -40,7 +40,7 @@ function promiseToCrawl({ url, depth }) {
     const generator = SitemapGenerator(url, {
       stripQuerystring: false,
       filepath,
-      maxDepth: depth
+      maxDepth
     });
 
     generator.on('done', async () => {
@@ -93,24 +93,31 @@ function promiseToReadFile(file) {
 }
 
 async function run() {
+  const key = core.getInput('APPLITOOLS_API_KEY');
 
-  const depth = 1;
-  const url = 'https://colbyfayock.com';
-  const key = 'TESTINGARANDOMKEY';
+  if ( !key ) {
+    throw new Error(`Invalid API key: did you remember to set the APPLITOOLS_API_KEY option?`)
+  }
+
+  const url = core.getInput('url');
+
+  if ( !url ) {
+    throw new Error(`Invalid URL: did you remember to set the url option?`)
+  }
+
+  const maxDepth = core.getInput('maxDepth');
+
   let sitemap;
 
   try {
     core.debug(`Crawling ${url}`);
     sitemap = await promiseToCrawl({
       url,
-      depth
+      maxDepth
     });
-  } catch(e) {
-    console.log(e);
-    return;
+  } catch(error) {
+    throw new Error(`Failed to crawl ${url}: ${error.message}`);
   }
-
-  console.log('sitemap', sitemap);
 
   core.exportVariable('APPLITOOLS_API_KEY', key);
 
@@ -136,4 +143,8 @@ async function run() {
   console.log('results', results);
 }
 
-run();
+try {
+  run();
+} catch(error) {
+  core.setFailed(error.message);
+}
