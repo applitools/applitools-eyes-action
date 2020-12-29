@@ -13,7 +13,7 @@ const { promiseToCrawl } = require('./lib/util');
 async function run() {
   const key = core.getInput('APPLITOOLS_API_KEY') || process.env.APPLITOOLS_API_KEY;
   
-  
+  console.log('test')
 
   fs.readdir(__dirname, (err, files) => {
     core.debug('__dirname', __dirname);
