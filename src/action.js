@@ -53,11 +53,12 @@ async function run() {
       APPLITOOLS_SERVER_URL: serverUrl,
       PAGES_TO_CHECK: sitemap
     },
+    headless: true,
     record: false,
   });    
 
   console.log('--Start Cypress Results--');
-  console.log(JSON.stringify(results));
+  console.log(JSON.stringify(results, null, 2));
   console.log('--End Cypress Results--'); 
 }
 
