@@ -5,6 +5,8 @@ ENV CYPRESS_CACHE_FOLDER=/root/.cache/Cypress
 
 RUN git clone https://github.com/colbyfayock/applitools-eyes-action .
 
+COPY . .
+
 RUN npm ci
 
 ENTRYPOINT ["node", "/src/action.js"]
