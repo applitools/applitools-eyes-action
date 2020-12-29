@@ -13,3 +13,5 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: './'
+      with:
+        APPLITOOLS_API_KEY: ${{secret.APPLITOOLS_API_KEY}}
