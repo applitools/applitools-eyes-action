@@ -13,10 +13,9 @@ const { promiseToCrawl } = require('./lib/util');
 async function run() {
   const key = core.getInput('APPLITOOLS_API_KEY') || process.env.APPLITOOLS_API_KEY;
   
-  console.log('test')
+  core.debug('process.cwd()', process.cwd());
 
-  fs.readdir(__dirname, (err, files) => {
-    core.debug('__dirname', __dirname);
+  fs.readdir(process.cwd(), (err, files) => {
     files.forEach(file => {
       core.debug('file', file);
     });
@@ -41,7 +40,6 @@ async function run() {
 
   let sitemap;
 
-  core.debug('testing');
   try {
     core.debug(`Crawling ${baseUrl}`);
     sitemap = await promiseToCrawl({
