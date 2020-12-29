@@ -1,5 +1,8 @@
 require('dotenv').config();
 
+const fs = require('fs');
+
+
 const core = require('@actions/core');
 const exec = require('@actions/exec');
 const cypress = require('cypress');
@@ -9,8 +12,15 @@ const { promiseToCrawl } = require('./lib/util');
 
 async function run() {
   const key = core.getInput('APPLITOOLS_API_KEY') || process.env.APPLITOOLS_API_KEY;
-  exec.exec('echo $(pwd)')
-  exec.exec('echo $(ls -la)')
+  
+  
+
+  fs.readdir(__dirname, (err, files) => {
+    console.log('__dirname', __dirname);
+    files.forEach(file => {
+      console.log('file', file);
+    });
+  });
 
   if ( !key ) {
     throw new Error(`Invalid API key: did you remember to set the APPLITOOLS_API_KEY option?`)
