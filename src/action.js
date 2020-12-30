@@ -8,16 +8,24 @@ const cypress = require('cypress');
 
 const { promiseToCrawl } = require('./lib/util');
 
+async function promiseToRead(source) {
+  return new Promise((resolve, reject) => {
+    fs.readdir(source, (err, files) => {
+      if ( err ) {
+        reject(err);
+      }
+      resolve(files);
+    });
+  })
+}
+
 
 async function run() {
   const key = core.getInput('APPLITOOLS_API_KEY') || process.env.APPLITOOLS_API_KEY;
 console.log('process.env.GITHUB_WORKSPACE', process.env.GITHUB_WORKSPACE)
 
-  fs.readdir(process.env.GITHUB_WORKSPACE, (err, files) => {
-    files.forEach(file => {
-      console.log('file', file)
-    });
-  });
+  const files = await promiseToRead(process.env.GITHUB_WORKSPACE);
+  console.log('files', files);
 
   if ( !key ) {
     throw new Error(`Invalid API key: did you remember to set the APPLITOOLS_API_KEY option?`)
