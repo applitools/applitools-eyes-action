@@ -2,7 +2,6 @@ require('dotenv').config();
 
 const fs = require('fs');
 
-const github = require('@actions/github');
 const core = require('@actions/core');
 const exec = require('@actions/exec');
 const cypress = require('cypress');
@@ -12,9 +11,9 @@ const { promiseToCrawl } = require('./lib/util');
 
 async function run() {
   const key = core.getInput('APPLITOOLS_API_KEY') || process.env.APPLITOOLS_API_KEY;
+console.log('process.env.GITHUB_WORKSPACE', process.env.GITHUB_WORKSPACE)
 
-
-  fs.readdir('./', (err, files) => {
+  fs.readdir(process.env.GITHUB_WORKSPACE, (err, files) => {
     files.forEach(file => {
       core.debug('file', file);
     });
@@ -50,8 +49,6 @@ async function run() {
   }
 
   core.exportVariable('APPLITOOLS_API_KEY', key);
-
-  console.log(JSON.stringify(github, null, 2))
 
   const results = await cypress.run({
     browser: cypressBrowser,
