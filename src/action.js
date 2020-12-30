@@ -51,8 +51,7 @@ async function run() {
 
   core.exportVariable('APPLITOOLS_API_KEY', key);
 
-  const context = github.context;
-  console.log(JSON.stringify(context, null, 2))
+  console.log(JSON.stringify(github, null, 2))
 
   const results = await cypress.run({
     browser: cypressBrowser,
