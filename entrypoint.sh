@@ -7,6 +7,4 @@ cd applitools-eyes-action
 
 npm ci
 
-ls -la
-
 node ./src/action.js

@@ -1,37 +1,19 @@
 require('dotenv').config();
 
-const fs = require('fs');
-
 const core = require('@actions/core');
-const exec = require('@actions/exec');
 const cypress = require('cypress');
 
 const { promiseToCrawl } = require('./lib/util');
 
-async function promiseToRead(source) {
-  return new Promise((resolve, reject) => {
-    fs.readdir(source, (err, files) => {
-      if ( err ) {
-        reject(err);
-      }
-      resolve(files);
-    });
-  })
-}
-
 
 async function run() {
   const key = core.getInput('APPLITOOLS_API_KEY') || process.env.APPLITOOLS_API_KEY;
-console.log('process.env.GITHUB_WORKSPACE', process.env.GITHUB_WORKSPACE)
-
-  const files = await promiseToRead(process.env.GITHUB_WORKSPACE);
-  console.log('files', files);
 
   if ( !key ) {
     throw new Error(`Invalid API key: did you remember to set the APPLITOOLS_API_KEY option?`)
   }
 
-  const baseUrl = core.getInput('baseUrl') || 'https://google.com';
+  const baseUrl = core.getInput('baseUrl') || process.env.APPLITOOLS_BASE_URL;
 
   if ( !baseUrl ) {
     throw new Error(`Invalid URL: did you remember to set the url option?`)
@@ -42,18 +24,24 @@ console.log('process.env.GITHUB_WORKSPACE', process.env.GITHUB_WORKSPACE)
   const concurrency = core.getInput('concurrency');
   const cypressBrowser = core.getInput('cypressBrowser');
   const maxDepth = core.getInput('maxDepth');
-  const serverUrl = core.getInput('serverUrl');
+  const serverUrl = core.getInput('serverUrl') || process.env.APPLITOOLS_SERVER_URL;
 
   let sitemap;
 
-  try {
-    core.debug(`Crawling ${baseUrl}`);
-    sitemap = await promiseToCrawl({
-      url: baseUrl,
-      maxDepth
-    });
-  } catch(error) {
-    throw new Error(`Failed to crawl ${url}: ${error.message}`);
+  if ( maxDepth === 1 ) {
+    core.debug(`maxDepth set to 1, skipping crawl of ${baseUrl}`);
+    sitemap = [baseUrl];
+  } else {
+    try {
+      core.debug(`Crawling ${baseUrl}`);
+      sitemap = await promiseToCrawl({
+        url: baseUrl,
+        maxDepth
+      });
+    } catch(error) {
+      throw new Error(`Failed to crawl ${url}: ${error.message}`);
+    }
+
   }
 
   core.exportVariable('APPLITOOLS_API_KEY', key);
@@ -74,9 +62,9 @@ console.log('process.env.GITHUB_WORKSPACE', process.env.GITHUB_WORKSPACE)
     record: false,
   });    
 
-  console.log('--Start Cypress Results--');
-  console.log(JSON.stringify(results, null, 2));
-  console.log('--End Cypress Results--'); 
+  core.debug('--Start Cypress Results--');
+  core.debug(JSON.stringify(results, null, 2));
+  core.debug('--End Cypress Results--'); 
 }
 
 try {
