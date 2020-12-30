@@ -53,9 +53,7 @@ async function run() {
 
   const results = await cypress.run({
     browser: cypressBrowser,
-    config: {
-      baseUrl
-    },
+    configFile: '../cypress.json',
     env: {
       APPLITOOLS_APP_NAME: appName,
       APPLITOOLS_BATCH_NAME: batchName,

@@ -5,8 +5,7 @@ ENV CYPRESS_CACHE_FOLDER=/root/.cache/Cypress
 
 # RUN git clone https://github.com/colbyfayock/applitools-eyes-action && mv applitools-eyes-action/* . && rm -rf applitools-eyes-action
 
-WORKDIR .
-COPY . .
+COPY /applitools-eyes-action .
 
 RUN npm ci
 
