@@ -15,7 +15,7 @@ console.log('process.env.GITHUB_WORKSPACE', process.env.GITHUB_WORKSPACE)
 
   fs.readdir(process.env.GITHUB_WORKSPACE, (err, files) => {
     files.forEach(file => {
-      core.debug('file', file);
+      console.log('file', file)
     });
   });
 
