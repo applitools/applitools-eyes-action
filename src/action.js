@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const fs = require('fs');
 
-
+const github = require('@actions/github');
 const core = require('@actions/core');
 const exec = require('@actions/exec');
 const cypress = require('cypress');
