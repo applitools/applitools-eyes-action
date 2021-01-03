@@ -25,7 +25,7 @@ This Action relies on 3 core pieces to provide visual testing coverage to a webs
 * [Sitemap Generator](https://github.com/lgraubner/sitemap-generator)
 * [Applitools](https://applitools.com/)
 
-Cypress is used as the test running, providing the ability to spin up an instance of Chrome (or other configured browser) to run visual regression testing.
+Cypress is used as the test runner, providing the ability to spin up an instance of Chrome (or other configured browser) to run visual regression testing.
 
 Sitemap Generator is used to crawl the website (`baseUrl`), providing a sitemap of pages to test in the app.
 
