@@ -29,6 +29,8 @@ Cypress is used as the test runner, providing the ability to spin up an instance
 
 Sitemap Generator is used to crawl the website (`baseUrl`), providing a sitemap of pages to test in the app.
 
+> Note: the `maxDepth` option of the crawler defaults to `1` meaning it will only capture the `baseUrl` page by default
+
 Applitools Eyes is used to provide AI-powered visual regression testing capabilities to the action.
 
 ## Options
