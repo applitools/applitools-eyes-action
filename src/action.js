@@ -3,7 +3,7 @@ require('dotenv').config();
 const core = require('@actions/core');
 const cypress = require('cypress');
 
-const { promiseToCrawl } = require('./lib/util');
+const { promiseToCrawl, promiseToGetAndReadSitemap } = require('./lib/util');
 
 
 async function run() {
@@ -14,9 +14,10 @@ async function run() {
   }
 
   const baseUrl = core.getInput('baseUrl') || process.env.APPLITOOLS_BASE_URL;
+  const sitemapUrl = core.getInput('sitemapUrl') || process.env.APPLITOOLS_SITEMAP_URL;
 
-  if ( !baseUrl ) {
-    throw new Error(`Invalid URL: did you remember to set the url option?`)
+  if ( !baseUrl && !sitemapUrl ) {
+    throw new Error(`Invalid URL: did you remember to set a baseUrl or sitemapUrl option?`);
   }
 
   const appName = core.getInput('appName');
@@ -26,22 +27,33 @@ async function run() {
   const maxDepth = core.getInput('maxDepth');
   const serverUrl = core.getInput('serverUrl') || process.env.APPLITOOLS_SERVER_URL;
 
-  let sitemap;
+  let pagesToCheck = [];
 
-  if ( maxDepth === 1 ) {
-    core.debug(`maxDepth set to 1, skipping crawl of ${baseUrl}`);
-    sitemap = [baseUrl];
-  } else {
-    try {
-      core.debug(`Crawling ${baseUrl}`);
-      sitemap = await promiseToCrawl({
-        url: baseUrl,
-        maxDepth
-      });
-    } catch(error) {
-      throw new Error(`Failed to crawl ${url}: ${error.message}`);
+  if ( baseUrl ) {
+    if ( maxDepth === 1 ) {
+      core.debug(`maxDepth set to 1, skipping crawl of ${baseUrl}`);
+      pagesToCheck.push(baseUrl);
+    } else {
+      try {
+        core.debug(`Crawling ${baseUrl}`);
+        const crawledPages = await promiseToCrawl({
+          url: baseUrl,
+          maxDepth
+        });
+        pagesToCheck = pagesToCheck.concat(crawledPages);
+      } catch(error) {
+        throw new Error(`Failed to crawl ${url}: ${error.message}`);
+      }
     }
+  }
 
+  if ( sitemapUrl ) {
+    try {
+      const sitemapList = await promiseToGetAndReadSitemap(sitemapUrl);
+      pagesToCheck = pagesToCheck.concat(sitemapList);
+    } catch(error) {
+      throw new Error(`Failed to get sitemap ${sitemapUrl}: ${error.message}`);
+    }
   }
 
   core.exportVariable('APPLITOOLS_API_KEY', key);

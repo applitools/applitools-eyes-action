@@ -12,6 +12,8 @@ inputs:
   appName:
     description: 'Name of the website or applitcation'
     default: 'Web App'
+  baseUrl:
+    description: 'The website URL to be craweled for visual regression testing'
   batchName:
     description: 'Name of the batch of tests (for display purpose only).'
     default: 'GitHub Action Workflow'
@@ -26,5 +28,5 @@ inputs:
     default: 1
   serverUrl:
     description: 'The URL of Eyes server'
-  baseUrl:
-    description: 'The website URL to be craweled for visual regression testing'
+  sitemapUrl:
+    description: 'The URL of a website sitemap to be used for visual regression testing'

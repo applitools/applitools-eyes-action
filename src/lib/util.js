@@ -1,4 +1,5 @@
 const fs = require('fs');
+const fetch = require('node-fetch');
 const core = require('@actions/core');
 const io = require('@actions/io');
 const { parseString } = require('xml2js');
@@ -34,7 +35,7 @@ function promiseToCrawl({ url, maxDepth }) {
   const errorBase = `Failed to crawl url ${url}`;
   return new Promise((resolve, reject) => {
     const filepath = `${SITEMAP_FILE_LOCATION}${SITEMAP_FILENAME}`;
-    
+
     core.debug(`Storing sitemap at: ${filepath}`);
 
     const generator = SitemapGenerator(url, {
@@ -47,7 +48,7 @@ function promiseToCrawl({ url, maxDepth }) {
       core.debug(`Sitemap successfully created`);
 
       let sitemap;
-      
+
       try {
         sitemap = await promiseToReadFile(filepath);
       } catch(e) {
@@ -57,10 +58,10 @@ function promiseToCrawl({ url, maxDepth }) {
 
       await io.rmRF(filepath);
 
-      const { urlset } = await promiseToConvertXmlToJson(sitemap)
+      sitemap = await promiseToConvertXmlToJson(sitemap);
 
-      sitemap = urlset.url.map(({ loc }) => loc && loc[0]).filter(loc => !!loc);
-      
+      sitemap = convertSitemapXmlToSiteList(sitemap)
+
       resolve(sitemap);
     });
 
@@ -79,6 +80,22 @@ function promiseToCrawl({ url, maxDepth }) {
 module.exports.promiseToCrawl = promiseToCrawl;
 
 /**
+ * promiseToGetAndReadSitemap
+ */
+
+async function promiseToGetAndReadSitemap(url) {
+  const response = await fetch(url);
+  const body = await response.text();
+
+  let sitemap = await promiseToConvertXmlToJson(body);
+
+  return convertSitemapXmlToSiteList(sitemap);
+}
+
+module.exports.promiseToGetAndReadSitemap = promiseToGetAndReadSitemap;
+
+
+/**
  * promiseToReadFile
  */
 
@@ -95,3 +112,12 @@ function promiseToReadFile(file) {
 }
 
 module.exports.promiseToReadFile = promiseToReadFile;
+
+/**
+ * convertSitemapXmlToSiteList
+ */
+
+function convertSitemapXmlToSiteList(xml = {}) {
+    const { urlset } = xml;
+    return urlset.url.map(({ loc }) => loc && loc[0]).filter(loc => !!loc);
+}
