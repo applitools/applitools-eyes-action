@@ -58,25 +58,29 @@ async function run() {
 
   core.exportVariable('APPLITOOLS_API_KEY', key);
 
-  const results = await cypress.run({
-    browser: cypressBrowser,
-    config: {
-      baseUrl
-    },
-    env: {
-      APPLITOOLS_APP_NAME: appName,
-      APPLITOOLS_BATCH_NAME: batchName,
-      APPLITOOLS_CONCURRENCY: concurrency,
-      APPLITOOLS_SERVER_URL: serverUrl,
-      PAGES_TO_CHECK: sitemap
-    },
-    headless: true,
-    record: false,
-  });    
-
-  core.debug('--Start Cypress Results--');
-  core.debug(JSON.stringify(results, null, 2));
-  core.debug('--End Cypress Results--'); 
+  try {
+    const results = await cypress.run({
+      browser: cypressBrowser,
+      config: {
+        baseUrl
+      },
+      env: {
+        APPLITOOLS_APP_NAME: appName,
+        APPLITOOLS_BATCH_NAME: batchName,
+        APPLITOOLS_CONCURRENCY: concurrency,
+        APPLITOOLS_SERVER_URL: serverUrl,
+        PAGES_TO_CHECK: pagesToCheck
+      },
+      headless: true,
+      record: false,
+    });    
+  
+    core.debug('--Start Cypress Results--');
+    core.debug(JSON.stringify(results, null, 2));
+    core.debug('--End Cypress Results--'); 
+  } catch(error) {
+    throw new Error(`Failed to run Eyes check: ${error.message}`);
+  }
 }
 
 try {
