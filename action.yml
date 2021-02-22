@@ -3,8 +3,8 @@ description: 'Applitools Eyes GitHub Action'
 author: 'Colby Fayock <hello@colbyfayock.com>'
 
 runs:
-  using: docker
-  image: Dockerfile
+  using: node12
+  main: dist/index.js
 
 inputs:
   APPLITOOLS_API_KEY:

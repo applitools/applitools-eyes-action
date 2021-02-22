@@ -7,15 +7,15 @@
   "author": "Colby Fayock <fayock@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "crawl": "sitemap-generator https://colbyfayock.com",
+    "build": "ncc build src/action.js -o dist",
     "test": "cypress run"
   },
   "devDependencies": {},
   "dependencies": {
     "@actions/core": "^1.2.6",
-    "@actions/exec": "^1.0.4",
     "@actions/io": "^1.0.2",
     "@applitools/eyes-cypress": "^3.17.0",
+    "@vercel/ncc": "^0.27.0",
     "cypress": "^6.2.0",
     "dotenv": "^8.2.0",
     "node-fetch": "^2.6.1",
