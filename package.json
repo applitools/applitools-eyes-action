@@ -18,6 +18,7 @@
     "@applitools/eyes-cypress": "^3.17.0",
     "cypress": "^6.2.0",
     "dotenv": "^8.2.0",
+    "fs-extra": "^9.1.0",
     "node-fetch": "^2.6.1",
     "sitemap-generator": "^8.5.1",
     "xml2js": "^0.4.23"

@@ -30,3 +30,5 @@ inputs:
     description: 'The URL of Eyes server'
   sitemapUrl:
     description: 'The URL of a website sitemap to be used for visual regression testing'
+  staticDir:
+    description: 'A static directory that can be used to serve and test a site'

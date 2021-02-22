@@ -29,3 +29,27 @@ jobs:
       with:
         appName: 'Next.js WordPress Starter'
         sitemapUrl: https://next-wordpress-starter.netlify.app/sitemap.xml
+
+  staticDir:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - run: |
+        # Clone a static site starter to test with
+        git clone https://github.com/colbyfayock/next-sass-starter.git 
+
+        # Navigate into the directory
+        cd next-sass-starter
+
+        # Install dependencies
+        yarn install
+
+        # Build and the site
+        ./node_modules/next/dist/bin/next build
+        ./node_modules/next/dist/bin/next export
+    - uses: './'
+      with:
+        appName: 'Next.js WordPress Starter'
+        staticDir: './next-sass-starter/out'

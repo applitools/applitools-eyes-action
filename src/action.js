@@ -1,10 +1,10 @@
 require('dotenv').config();
 
+const fs = require('fs-extra');
 const core = require('@actions/core');
 const cypress = require('cypress');
 
 const { promiseToCrawl, promiseToGetAndReadSitemap } = require('./lib/util');
-
 
 async function run() {
   const key = core.getInput('APPLITOOLS_API_KEY') || process.env.APPLITOOLS_API_KEY;
@@ -26,8 +26,15 @@ async function run() {
   const cypressBrowser = core.getInput('cypressBrowser');
   const maxDepth = core.getInput('maxDepth');
   const serverUrl = core.getInput('serverUrl') || process.env.APPLITOOLS_SERVER_URL;
+  const staticDir = core.getInput('staticDir');
 
   let pagesToCheck = [];
+
+  if ( staticDir ) {
+    fs.readdirSync(staticDir).forEach(file => {
+      console.log(file);
+    });
+  }
 
   if ( baseUrl ) {
     if ( maxDepth === 1 ) {
