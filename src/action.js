@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const core = require('@actions/exec');
+const core = require('@actions/core');
 const cypress = require('cypress');
 
 const { promiseToCrawl, promiseToGetAndReadSitemap } = require('./lib/util');
