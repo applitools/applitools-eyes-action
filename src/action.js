@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const path = require('path');
 const fs = require('fs-extra');
 const core = require('@actions/core');
 const cypress = require('cypress');
@@ -31,10 +32,12 @@ async function run() {
   let pagesToCheck = [];
 
   if ( staticDir ) {
-    fs.readdirSync(staticDir).forEach(file => {
+    fs.readdirSync(path.resolve(__dirname, staticDir)).forEach(file => {
       console.log(file);
     });
   }
+
+  return;
 
   if ( baseUrl ) {
     if ( maxDepth === 1 ) {
