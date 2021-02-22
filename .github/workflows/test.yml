@@ -53,3 +53,4 @@ jobs:
       with:
         appName: 'Next.js WordPress Starter'
         staticDir: './next-sass-starter/out'
+        sitemapUrl: https://next-wordpress-starter.netlify.app/sitemap.xml
