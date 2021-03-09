@@ -4,8 +4,7 @@
  * @type {Cypress.PluginConfig}
  */
 module.exports = (on, config) => {
-  require('cypress-log-to-output').install(on)
+  // Plugins
 }
-
 
 require('@applitools/eyes-cypress')(module);

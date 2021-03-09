@@ -17,7 +17,6 @@
     "@actions/io": "^1.0.2",
     "@applitools/eyes-cypress": "^3.17.0",
     "cypress": "^6.2.0",
-    "cypress-log-to-output": "^1.1.2",
     "dotenv": "^8.2.0",
     "node-fetch": "^2.6.1",
     "sitemap-generator": "^8.5.1",
