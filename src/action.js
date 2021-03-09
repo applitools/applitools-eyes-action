@@ -77,9 +77,9 @@ async function run() {
       record: false,
     });    
   
-    core.debug('--Start Cypress Results--');
-    core.debug(JSON.stringify(results, null, 2));
-    core.debug('--End Cypress Results--'); 
+    console.log('--Start Cypress Results--');
+    console.log(JSON.stringify(results, null, 2));
+    console.log('--End Cypress Results--'); 
   } catch(error) {
     throw new Error(`Failed to run Eyes check: ${error.message}`);
   }

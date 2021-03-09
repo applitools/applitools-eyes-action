@@ -12,9 +12,9 @@ describe('Visual Regression Tests', () => {
   pagesToCheck.forEach((route) => {
     it(`Visual Diff for ${route}`, () => {
 
-      cy.log(`process.env.APPLITOOLS_CONCURRENCY: ${process.env.APPLITOOLS_CONCURRENCY}`);
+      console.log(`process.env.APPLITOOLS_CONCURRENCY: ${process.env.APPLITOOLS_CONCURRENCY}`);
 
-      cy.log(`Eyes config: ${JSON.stringify(eyesConfig, null, 2)}`);
+      console.log(`Eyes config: ${JSON.stringify(eyesConfig, null, 2)}`);
 
       cy.eyesOpen(eyesConfig);
 
