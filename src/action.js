@@ -30,12 +30,13 @@ async function run() {
   let pagesToCheck = [];
 
   if ( baseUrl ) {
+    console.log(`Found baseUrl: ${baseUrl}`);
     if ( maxDepth === 1 ) {
-      core.debug(`maxDepth set to 1, skipping crawl of ${baseUrl}`);
+      console.log(`maxDepth set to 1, skipping crawl of ${baseUrl}`);
       pagesToCheck.push(baseUrl);
     } else {
       try {
-        core.debug(`Crawling ${baseUrl}`);
+        console.log(`Crawling ${baseUrl}`);
         const crawledPages = await promiseToCrawl({
           url: baseUrl,
           maxDepth
@@ -48,6 +49,7 @@ async function run() {
   }
 
   if ( sitemapUrl ) {
+    console.log(`Found sitemapUrl: ${sitemapUrl}`);
     try {
       const sitemapList = await promiseToGetAndReadSitemap(sitemapUrl);
       pagesToCheck = pagesToCheck.concat(sitemapList);

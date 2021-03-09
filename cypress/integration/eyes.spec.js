@@ -9,7 +9,7 @@ describe('Visual Regression Tests', () => {
       cy.eyesOpen({
         appName: Cypress.env('APPLITOOLS_APP_NAME'),
         batchName: Cypress.env('APPLITOOLS_BATCH_NAME'),
-        concurrency: Number(Cypress.env('APPLITOOLS_CONCURRENCY')),
+        testConcurrency: Number(Cypress.env('APPLITOOLS_CONCURRENCY')),
         serverUrl: Cypress.env('APPLITOOLS_SERVER_URL'),
       });
 
