@@ -23,6 +23,9 @@ inputs:
   cypressBrowser:
     description: 'Browser Cypress uses to run tests'
     default: 'chrome'
+  errorOnFailure:
+    description: 'Set an error status if any tests fail'
+    default: true
   maxDepth:
     description: 'How many steps deep do you want to crawl the given website?'
     default: 1
