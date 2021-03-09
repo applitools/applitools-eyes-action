@@ -29,3 +29,4 @@ jobs:
       with:
         appName: 'Next.js WordPress Starter'
         sitemapUrl: https://next-wordpress-starter.netlify.app/sitemap.xml
+        concurrency: 20
