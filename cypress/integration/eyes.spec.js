@@ -9,13 +9,10 @@ describe('Visual Regression Tests', () => {
     serverUrl: Cypress.env('APPLITOOLS_SERVER_URL'),
   }
 
+  console.log('Eyes Config', eyesConfig);
+
   pagesToCheck.forEach((route) => {
     it(`Visual Diff for ${route}`, () => {
-
-      console.log(`process.env.APPLITOOLS_CONCURRENCY: ${process.env.APPLITOOLS_CONCURRENCY}`);
-
-      console.log(`Eyes config: ${JSON.stringify(eyesConfig, null, 2)}`);
-
       cy.eyesOpen(eyesConfig);
 
       cy.visit(route);

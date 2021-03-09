@@ -17,7 +17,8 @@ jobs:
     - uses: actions/checkout@v2
     - uses: './'
       with:
-        appName: 'Colby Fayock Web'
+        appName: 'Applitools Eyes Action'
+        batchName: 'Colby Fayock Web'
         baseUrl: https://colbyfayock.com
 
   sitemapUrl:
@@ -27,7 +28,8 @@ jobs:
     - uses: actions/checkout@v2
     - uses: './'
       with:
-        appName: 'Next.js WordPress Starter'
+        appName: 'Applitools Eyes Action'
+        batchName: 'Next.js WordPress Starter'
         sitemapUrl: https://next-wordpress-starter.netlify.app/sitemap.xml
 
   concurrency:
@@ -37,6 +39,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: './'
       with:
-        appName: 'Next.js WordPress Starter'
+        appName: 'Applitools Eyes Action'
+        batchName: 'Next.js WordPress Starter'
         sitemapUrl: https://next-wordpress-starter.netlify.app/sitemap.xml
         concurrency: 20
