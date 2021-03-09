@@ -59,6 +59,7 @@ async function run() {
   }
 
   core.exportVariable('APPLITOOLS_API_KEY', key);
+  core.exportVariable('APPLITOOLS_CONCURRENCY', concurrency);
 
   try {
     const results = await cypress.run({
@@ -69,7 +70,6 @@ async function run() {
       env: {
         APPLITOOLS_APP_NAME: appName,
         APPLITOOLS_BATCH_NAME: batchName,
-        APPLITOOLS_CONCURRENCY: concurrency,
         APPLITOOLS_SERVER_URL: serverUrl,
         PAGES_TO_CHECK: pagesToCheck
       },
