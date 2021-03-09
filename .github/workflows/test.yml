@@ -29,4 +29,14 @@ jobs:
       with:
         appName: 'Next.js WordPress Starter'
         sitemapUrl: https://next-wordpress-starter.netlify.app/sitemap.xml
+
+  concurrency:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: './'
+      with:
+        appName: 'Next.js WordPress Starter'
+        sitemapUrl: https://next-wordpress-starter.netlify.app/sitemap.xml
         concurrency: 20
