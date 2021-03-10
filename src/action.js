@@ -61,7 +61,9 @@ async function run() {
   }
 
   core.exportVariable('APPLITOOLS_API_KEY', key);
+
   core.exportVariable('APPLITOOLS_CONCURRENCY', concurrency);
+  console.log(`${prefix} Concurrency set to ${process.env.APPLITOOLS_CONCURRENCY}`);
 
   let results;
 
