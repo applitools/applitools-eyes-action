@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const fs = require('fs').promises;
 const core = require('@actions/core');
 const cypress = require('cypress');
 
@@ -62,8 +63,16 @@ async function run() {
 
   core.exportVariable('APPLITOOLS_API_KEY', key);
 
-  core.exportVariable('APPLITOOLS_CONCURRENCY', concurrency);
-  console.log(`${prefix} Concurrency set to ${process.env.APPLITOOLS_CONCURRENCY}`);
+  
+
+  const applitoolsConfig = {
+    testConcurrency: concurrency
+  }
+
+  console.log(`${prefix} Writing applitools.config.js`);
+  console.log(JSON.stringify(applitoolsConfig, null, 2));
+
+  await fs.writeFile('./applitools.config.js', `module.exports = ${JSON.stringify(applitoolsConfig)}`, 'utf8');
 
   let results;
 
