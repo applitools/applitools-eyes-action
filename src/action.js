@@ -66,7 +66,8 @@ async function run() {
   
 
   const applitoolsConfig = {
-    testConcurrency: concurrency
+    testConcurrency: concurrency,
+    showLogs: true
   }
 
   console.log(`${prefix} Writing applitools.config.js`);
