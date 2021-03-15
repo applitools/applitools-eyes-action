@@ -66,7 +66,7 @@ async function run() {
   
 
   const applitoolsConfig = {
-    testConcurrency: concurrency,
+    testConcurrency: concurrency && parseInt(concurrency),
     showLogs: true
   }
 
