@@ -17,6 +17,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: './'
       with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         appName: 'Applitools Eyes Action'
         batchName: 'Colby Fayock Web'
         baseUrl: https://colbyfayock.com
@@ -28,6 +29,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: './'
       with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         appName: 'Applitools Eyes Action'
         batchName: 'Next.js WordPress Starter'
         sitemapUrl: https://next-wordpress-starter.netlify.app/sitemap.xml
@@ -39,6 +41,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: './'
       with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         appName: 'Applitools Eyes Action'
         batchName: 'Next.js WordPress Starter'
         sitemapUrl: https://next-wordpress-starter.netlify.app/sitemap.xml

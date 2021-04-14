@@ -108,7 +108,7 @@ async function run() {
     console.log(JSON.stringify(results, null, 2));
     console.log('${prefix} --End Cypress Results--'); 
   } catch(error) {
-    throw new Error(`Failed to run Eyes check: ${error.message}`);
+    core.setFailed(`Failed to run Eyes check: ${error.message}`);
   }  
 
   if ( octokit ) {
@@ -123,11 +123,11 @@ async function run() {
       sha: batchId,
       state: failedCount > 0 ? 'failure' : 'success'
     });
-
   }  
 
   if ( errorOnFailure && results.totalFailed > 0 ) {
-    throw new Error(`${prefix} Unsuccessful with ${results.totalFailed} failing tests!`)
+    core.setFailed(`${prefix} Unsuccessful with ${results.totalFailed} failing tests!`);
+    return;
   }
 
   console.log(`${prefix} Success!`);
