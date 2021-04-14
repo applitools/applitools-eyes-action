@@ -74,10 +74,6 @@ async function run() {
 
   core.exportVariable('APPLITOOLS_API_KEY', key);
 
-  if ( batchId ) {
-    core.exportVariable('APPLITOOLS_BATCH_ID', batchId);
-  }
-
   const applitoolsConfig = {
     testConcurrency: concurrency && parseInt(concurrency),
     // showLogs: true
@@ -100,6 +96,7 @@ async function run() {
       env: {
         APPLITOOLS_APP_NAME: appName,
         APPLITOOLS_BATCH_NAME: batchName,
+        APPLITOOLS_BATCH_ID: batchId,
         APPLITOOLS_SERVER_URL: serverUrl,
         PAGES_TO_CHECK: pagesToCheck
       },

@@ -6,6 +6,7 @@ describe('Visual Regression Tests', () => {
   const eyesConfig = {
     appName: Cypress.env('APPLITOOLS_APP_NAME'),
     batchName: Cypress.env('APPLITOOLS_BATCH_NAME'),
+    batchId: Cypress.env('APPLITOOLS_BATCH_ID'),
     serverUrl: Cypress.env('APPLITOOLS_SERVER_URL'),
   }
 
