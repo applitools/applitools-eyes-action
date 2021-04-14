@@ -39,17 +39,18 @@ Applitools Eyes is used to provide AI-powered visual regression testing capabili
 
 The following options can be used as parameters by using the `with` block in the Action Workflow:
 
-| Name               | Required | Default                | Description                                                           |
-| ------------------ | -------- | ---------------------- | --------------------------------------------------------------------- |
-| APPLITOOLS_API_KEY | Yes      | -                      | Unique API key from your Applitools account                           |
-| appName            | No       | Web App                | Name of the website or applitcation                                   |
-| baseUrl            | Yes*     | -                      | The website URL to be craweled for visual regression testing          |
-| batchName          | No       | GitHub Action Workflow | Name of the batch of tests (for display purpose only).                |
-| concurrency        | No       | 5                      | Number of Eyes tests that this Runner will run concurrently           |
-| cypressBrowser     | No       | chrome                 | Browser Cypress uses to run tests                                     |
-| maxDepth           | No       | 1                      | How many steps deep do you want to crawl the given website?           |
-| serverUrl          | No       | -                      | The URL of Eyes server                                                |
-| sitemapUrl         | Yes*     | -                      | The URL of a website sitemap to be used for visual regression testing |
+| Name                | Required | Default                | Description                                                           |
+| ------------------- | -------- | ---------------------- | --------------------------------------------------------------------- |
+| APPLITOOLS_API_KEY  | Yes      | -                      | Unique API key from your Applitools account                           |
+| APPLITOOLS_BATCH_ID | No       | -                      | Unique ID for the test batch                                          |
+| appName             | No       | Web App                | Name of the website or applitcation                                   |
+| baseUrl             | Yes*     | -                      | The website URL to be craweled for visual regression testing          |
+| batchName           | No       | GitHub Action Workflow | Name of the batch of tests (for display purpose only).                |
+| concurrency         | No       | 5                      | Number of Eyes tests that this Runner will run concurrently           |
+| cypressBrowser      | No       | chrome                 | Browser Cypress uses to run tests                                     |
+| maxDepth            | No       | 1                      | How many steps deep do you want to crawl the given website?           |
+| serverUrl           | No       | -                      | The URL of Eyes server                                                |
+| sitemapUrl          | Yes*     | -                      | The URL of a website sitemap to be used for visual regression testing |
 
 *Either a `baseUrl` or `sitemapUrl` URL is required for the action
 

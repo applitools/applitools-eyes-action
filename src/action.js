@@ -10,6 +10,7 @@ const prefix = `[Applitools Eyes Action]`;
 
 async function run() {
   const key = core.getInput('APPLITOOLS_API_KEY') || process.env.APPLITOOLS_API_KEY;
+  const batchId = core.getInput('APPLITOOLS_BATCH_ID') || process.env.APPLITOOLS_BATCH_ID;
 
   if ( !key ) {
     throw new Error(`Invalid API key: did you remember to set the APPLITOOLS_API_KEY option?`)
@@ -63,7 +64,9 @@ async function run() {
 
   core.exportVariable('APPLITOOLS_API_KEY', key);
 
-  
+  if ( batchId ) {
+    core.exportVariable('APPLITOOLS_BATCH_ID', batchId);
+  }
 
   const applitoolsConfig = {
     testConcurrency: concurrency && parseInt(concurrency),
