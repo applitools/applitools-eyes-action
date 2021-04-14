@@ -2,18 +2,26 @@ require('dotenv').config();
 
 const fs = require('fs').promises;
 const core = require('@actions/core');
+const github = require('@actions/github');
 const cypress = require('cypress');
 
 const { promiseToCrawl, promiseToGetAndReadSitemap } = require('./lib/util');
+const { getBatchById } = require('./lib/applitools');
 
 const prefix = `[Applitools Eyes Action]`;
 
 async function run() {
   const key = core.getInput('APPLITOOLS_API_KEY') || process.env.APPLITOOLS_API_KEY;
   const batchId = core.getInput('APPLITOOLS_BATCH_ID') || process.env.APPLITOOLS_BATCH_ID;
+  const githubToken = core.getInput('GITHUB_TOKEN') || process.env.GITHUB_TOKEN;
+  let octokit;
 
   if ( !key ) {
     throw new Error(`Invalid API key: did you remember to set the APPLITOOLS_API_KEY option?`)
+  }
+
+  if ( githubToken) {
+    octokit = github.getOctokit(githubToken);
   }
 
   const baseUrl = core.getInput('baseUrl') || process.env.APPLITOOLS_BASE_URL;
@@ -70,7 +78,7 @@ async function run() {
 
   const applitoolsConfig = {
     testConcurrency: concurrency && parseInt(concurrency),
-    showLogs: true
+    // showLogs: true
   }
 
   console.log(`${prefix} Writing applitools.config.js`);
@@ -101,7 +109,22 @@ async function run() {
     console.log('${prefix} --End Cypress Results--'); 
   } catch(error) {
     throw new Error(`Failed to run Eyes check: ${error.message}`);
-  }
+  }  
+
+  if ( octokit ) {
+    const { context = {} } = github;
+    
+    const batchResults = await getBatchById(batchId);
+    const { failedCount } = batchResults;
+    console.log('batchResults', JSON.stringify(batchResults, null, 2))
+
+    await octokit.repos.createCommitStatus({
+      ...context.repo,
+      sha: batchId,
+      state: failedCount > 0 ? 'failure' : 'success'
+    });
+
+  }  
 
   if ( errorOnFailure && results.totalFailed > 0 ) {
     throw new Error(`${prefix} Unsuccessful with ${results.totalFailed} failing tests!`)
