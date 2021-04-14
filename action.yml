@@ -9,8 +9,11 @@ runs:
 inputs:
   APPLITOOLS_API_KEY:
     description: 'Unique API key from your Applitools account'
+    required: true
   APPLITOOLS_BATCH_ID:
     description: 'Unique ID for the test batch'
+  GITHUB_TOKEN:
+    description: 'GitHub Token'
   appName:
     description: 'Name of the website or applitcation'
     default: 'Web App'
