@@ -14,6 +14,8 @@ async function run() {
   const key = core.getInput('APPLITOOLS_API_KEY') || process.env.APPLITOOLS_API_KEY;
   const batchId = core.getInput('APPLITOOLS_BATCH_ID') || process.env.APPLITOOLS_BATCH_ID;
   const githubToken = core.getInput('GITHUB_TOKEN') || process.env.GITHUB_TOKEN;
+
+  const { context = {} } = github;
   let octokit;
 
   if ( !key ) {
@@ -112,21 +114,25 @@ async function run() {
     errors.push(`Failed to run Eyes check: ${error.message}`)
   }  
 
-  console.log('after cypress')
 
   if ( octokit ) {
-    console.log('octokit');
-    const { context = {} } = github;
-    
-    const batchResults = await getBatchById(batchId);
-    const { failedCount } = batchResults;
-    console.log('batchResults', JSON.stringify(batchResults, null, 2))
+    try {
+      console.log('octokit');
+      
+      console.log('getting batch')
+      const batchResults = await getBatchById(batchId);
+      console.log('got batch')
+      const { failedCount } = batchResults;
+      console.log('batchResults', JSON.stringify(batchResults, null, 2))
 
-    await octokit.repos.createCommitStatus({
-      ...context.repo,
-      sha: batchId,
-      state: failedCount > 0 ? 'failure' : 'success'
-    });
+      await octokit.repos.createCommitStatus({
+        ...context.repo,
+        sha: batchId,
+        state: failedCount > 0 ? 'failure' : 'success'
+      });
+    } catch(error) {
+      errors.push(`Failed to get Eyes batch: ${error.message}`)
+    }
   }  
 
   if ( errorOnFailure && results.totalFailed > 0 ) {
