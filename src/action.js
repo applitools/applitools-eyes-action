@@ -87,6 +87,7 @@ async function run() {
   await fs.writeFile('./applitools.config.js', `module.exports = ${JSON.stringify(applitoolsConfig)}`, 'utf8');
 
   let results;
+  let errors = [];
 
   try {
     results = await cypress.run({
@@ -104,14 +105,17 @@ async function run() {
       record: false,
     });    
   
-    console.log('${prefix} --Start Cypress Results--');
+    console.log(`${prefix} --Start Cypress Results-`);
     console.log(JSON.stringify(results, null, 2));
-    console.log('${prefix} --End Cypress Results--'); 
+    console.log(`${prefix} --End Cypress Results--`); 
   } catch(error) {
-    core.setFailed(`Failed to run Eyes check: ${error.message}`);
+    errors.push(`Failed to run Eyes check: ${error.message}`)
   }  
 
+  console.log('after cypress')
+
   if ( octokit ) {
+    console.log('octokit');
     const { context = {} } = github;
     
     const batchResults = await getBatchById(batchId);
@@ -126,7 +130,11 @@ async function run() {
   }  
 
   if ( errorOnFailure && results.totalFailed > 0 ) {
-    core.setFailed(`${prefix} Unsuccessful with ${results.totalFailed} failing tests!`);
+    errors.push(`${prefix} Unsuccessful with ${results.totalFailed} failing tests!`);
+  }
+
+  if ( errors.length > 0 ) {
+    core.setFailed(errors.join(';'));
     return;
   }
 
