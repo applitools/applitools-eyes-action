@@ -23,11 +23,11 @@ function waitFor200(callback, timeout = 15000) {
         try {
           response = await callback();
         } catch(e) {
-          console.log(`Waiting for 200 - ${e.message}`);
+          console.log(`Waiting for 200 from ${response.id} - ${e.message}`);
         }
         
-        if ( response && response.ok ) {
-          resolve(response);
+        if ( response.response && response.response.ok ) {
+          resolve(response.response);
           return;
         }
 
@@ -39,7 +39,7 @@ function waitFor200(callback, timeout = 15000) {
 
     setTimeout(() => {
       clearTimeout(retryTimeout)
-      if ( !response || !response.ok ) {
+      if ( !response.response || !response.response.ok ) {
         reject('Timeout')
       }
     }, timeout);
