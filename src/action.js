@@ -5,7 +5,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const cypress = require('cypress');
 
-const { promiseToCrawl, promiseToGetAndReadSitemap } = require('./lib/util');
+const { promiseToCrawl, promiseToGetAndReadSitemap, waitFor200 } = require('./lib/util');
 const { getBatchByPointerId } = require('./lib/applitools');
 
 const prefix = `[Applitools Eyes Action]`;
@@ -125,8 +125,8 @@ async function run() {
   if ( octokit ) {
     try {
       console.log('octokit');
-      
-      const batchResults = await getBatchByPointerId(batchId);
+
+      const batchResults = await waitFor200(getBatchByPointerId(batchId))
       const { failedCount } = batchResults;
       console.log('batchResults', JSON.stringify(batchResults, null, 2))
 

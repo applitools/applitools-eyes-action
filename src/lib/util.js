@@ -9,6 +9,44 @@ const SITEMAP_FILE_LOCATION = './';
 const SITEMAP_FILENAME = 'EYES-SITEMAP.xml';
 
 /**
+ * waitFor200
+ */
+
+function waitFor200(request, timeout = 15000) {
+  return new Promise((resolve, reject) => {
+    let retryTimeout;
+    let response;
+
+    function retry() {
+      retryTimeout = setTimeout(async () => {
+        response = await request;
+        
+        if ( response.ok ) {
+          resolve(response);
+          return;
+        }
+
+        retry();
+      }, 1000)
+    }
+
+    retry();
+
+    setTimeout(() => {
+      clearTimeout(retryTimeout)
+      if ( !response || !response.ok ) {
+        reject('Timeout')
+      }
+    }, timeout);
+  });
+
+  
+}
+
+module.exports.waitFor200 = waitFor200;
+
+
+/**
  * promiseToConvertXmlToJson
  */
 
