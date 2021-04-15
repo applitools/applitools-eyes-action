@@ -146,11 +146,11 @@ async function run() {
           ...context.repo,
           issue_number: pull_request.number,
           body: `
-${completedCount} runs have completed!
+${completedCount} run(s) have completed!
 ---
-Passed: ${passedCount}
-Failed: ${failedCount}
-Unresolved: ${unresolvedCount}`
+✅ Passed: ${passedCount}
+❌ Failed: ${failedCount}
+⚠️ Unresolved: ${unresolvedCount}`
         });
       }
     } catch(error) {
