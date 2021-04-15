@@ -87,6 +87,7 @@ async function run() {
 
   const applitoolsConfig = {
     testConcurrency: concurrency && parseInt(concurrency),
+    batchId,
     showLogs: true
   }
 
