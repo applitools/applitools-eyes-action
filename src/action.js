@@ -16,6 +16,7 @@ async function run() {
   const githubToken = core.getInput('GITHUB_TOKEN') || process.env.GITHUB_TOKEN;
 
   const { context = {} } = github;
+  const { pull_request } = context.payload;
   let octokit;
 
   if ( !key ) {
@@ -112,14 +113,14 @@ async function run() {
       },
       headless: true,
       record: false,
-    });    
-  
+    });
+
     console.log(`${prefix} --Start Cypress Results--`);
     console.log(JSON.stringify(results, null, 2));
-    console.log(`${prefix} --End Cypress Results--`); 
+    console.log(`${prefix} --End Cypress Results--`);
   } catch(error) {
     errors.push(`Failed to run Eyes check: ${error.message}`)
-  }  
+  }
 
 
   if ( octokit ) {
@@ -130,19 +131,32 @@ async function run() {
 
       console.log(`${prefix} --Start Applitools Results--`);
       console.log(JSON.stringify(batchResults, null, 2))
-      console.log(`${prefix} --End Applitools Results--`); 
+      console.log(`${prefix} --End Applitools Results--`);
 
-      const { failedCount } = batchResults;
-      
+      const { completedCount, failedCount, passedCount, unresolvedCount } = batchResults;
+
       await octokit.repos.createCommitStatus({
         ...context.repo,
         sha: batchId,
         state: failedCount > 0 ? 'failure' : 'success'
       });
+
+      if ( pull_request && pull_request.number ) {
+        await octokit.issues.createComment({
+          ...context.repo,
+          issue_number: pull_request.number,
+          body: `
+${completedCount} runs have completed!
+---
+Passed: ${passedCount}
+Failed: ${failedCount}
+Unresolved: ${unresolvedCount}`
+        });
+      }
     } catch(error) {
       errors.push(`Failed to get Eyes batch: ${error.message}`)
     }
-  }  
+  }
 
   if ( errorOnFailure && results.totalFailed > 0 ) {
     errors.push(`${prefix} Unsuccessful with ${results.totalFailed} failing tests!`);
