@@ -81,6 +81,9 @@ async function run() {
   }
 
   core.exportVariable('APPLITOOLS_API_KEY', key);
+  core.exportVariable('APPLITOOLS_BATCH_ID', batchId);
+
+  console.log('APPLITOOLS_BATCH_ID', process.env.APPLITOOLS_BATCH_ID);
 
   const applitoolsConfig = {
     testConcurrency: concurrency && parseInt(concurrency),
