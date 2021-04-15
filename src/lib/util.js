@@ -19,7 +19,12 @@ function waitFor200(request, timeout = 15000) {
 
     function retry() {
       retryTimeout = setTimeout(async () => {
-        response = await request;
+
+        try {
+          response = await request;
+        } catch(e) {
+          console.log(`Waiting for 200 - ${e.message}`);
+        }
         
         if ( response.ok ) {
           resolve(response);
