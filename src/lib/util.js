@@ -12,7 +12,7 @@ const SITEMAP_FILENAME = 'EYES-SITEMAP.xml';
  * waitFor200
  */
 
-function waitFor200(request, timeout = 15000) {
+function waitFor200(callback, timeout = 15000) {
   return new Promise((resolve, reject) => {
     let retryTimeout;
     let response;
@@ -21,7 +21,7 @@ function waitFor200(request, timeout = 15000) {
       retryTimeout = setTimeout(async () => {
 
         try {
-          response = await request;
+          response = await callback();
         } catch(e) {
           console.log(`Waiting for 200 - ${e.message}`);
         }

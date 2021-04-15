@@ -126,7 +126,10 @@ async function run() {
     try {
       console.log('octokit');
 
-      const batchResults = await waitFor200(getBatchByPointerId(batchId))
+      const batchResults = await waitFor200(async () => {
+        return await getBatchByPointerId(batchId)
+      });
+      
       const { failedCount } = batchResults;
       console.log('batchResults', JSON.stringify(batchResults, null, 2))
 
