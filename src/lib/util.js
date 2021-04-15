@@ -14,21 +14,25 @@ const SITEMAP_FILENAME = 'EYES-SITEMAP.xml';
 
 function waitFor200(callback, timeout = 15000) {
   return new Promise((resolve, reject) => {
-    let retryTimeout;
+    let timeoutRetry;
+    let timeoutCancel;
     let response;
 
     function retry() {
-      retryTimeout = setTimeout(async () => {
+      timeoutRetry = setTimeout(async () => {
         try {
           response = await callback();
         } catch(e) {
           console.log(`Request failed... waiting for 200 - ${e.message}`);
         }
         
-        if ( response && response.ok ) {
+        if ( response ) {
+          clearTimeout(timeoutCancel);
           resolve(response);
           return;
         }
+
+        console.log('retry')
 
         retry();
       }, 1000)
@@ -36,8 +40,8 @@ function waitFor200(callback, timeout = 15000) {
 
     retry();
 
-    setTimeout(() => {
-      clearTimeout(retryTimeout)
+    timeoutCancel = setTimeout(() => {
+      clearTimeout(timeoutRetry)
       if ( !response || !response.ok ) {
         reject('Timeout')
       }

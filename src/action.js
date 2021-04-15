@@ -114,7 +114,7 @@ async function run() {
       record: false,
     });    
   
-    console.log(`${prefix} --Start Cypress Results-`);
+    console.log(`${prefix} --Start Cypress Results--`);
     console.log(JSON.stringify(results, null, 2));
     console.log(`${prefix} --End Cypress Results--`); 
   } catch(error) {
@@ -126,13 +126,14 @@ async function run() {
     try {
       console.log('octokit');
 
-      const batchResults = await waitFor200(async () => {
-        return await getBatchByPointerId(batchId)
-      });
+      const batchResults = await waitFor200(() => getBatchByPointerId(batchId))
+
+      console.log(`${prefix} --Start Applitools Results--`);
+      console.log(JSON.stringify(batchResults, null, 2))
+      console.log(`${prefix} --End Applitools Results--`); 
 
       const { failedCount } = batchResults;
-      console.log('batchResults', JSON.stringify(batchResults, null, 2))
-
+      
       await octokit.repos.createCommitStatus({
         ...context.repo,
         sha: batchId,
