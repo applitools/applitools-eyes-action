@@ -98,8 +98,6 @@ async function run() {
   let results;
   let errors = [];
 
-  console.log(`batchId: ${batchId}`)
-
   try {
     results = await cypress.run({
       browser: cypressBrowser,
@@ -109,7 +107,6 @@ async function run() {
       env: {
         APPLITOOLS_APP_NAME: appName,
         APPLITOOLS_BATCH_NAME: batchName,
-        APPLITOOLS_BATCH_ID: batchId,
         APPLITOOLS_SERVER_URL: serverUrl,
         PAGES_TO_CHECK: pagesToCheck
       },
@@ -129,10 +126,7 @@ async function run() {
     try {
       console.log('octokit');
       
-      console.log('getting batch')
-      console.log(`batchId: ${batchId}`)
       const batchResults = await getBatchById(batchId);
-      console.log('got batch')
       const { failedCount } = batchResults;
       console.log('batchResults', JSON.stringify(batchResults, null, 2))
 
