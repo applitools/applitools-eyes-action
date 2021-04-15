@@ -81,7 +81,7 @@ async function run() {
   }
 
   core.exportVariable('APPLITOOLS_API_KEY', key);
-  core.exportVariable('APPLITOOLS_BATCH_ID', batchId);
+  core.exportVariable('APPLITOOLS_BATCH_ID', 1234);
 
   console.log('APPLITOOLS_BATCH_ID', process.env.APPLITOOLS_BATCH_ID);
 
