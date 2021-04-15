@@ -26,7 +26,7 @@ function waitFor200(callback, timeout = 15000) {
           console.log(`Waiting for 200 - ${e.message}`);
         }
         
-        if ( response.ok ) {
+        if ( response && response.ok ) {
           resolve(response);
           return;
         }
