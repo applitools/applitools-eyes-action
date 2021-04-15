@@ -10,8 +10,6 @@ describe('Visual Regression Tests', () => {
     serverUrl: Cypress.env('APPLITOOLS_SERVER_URL'),
   }
 
-  console.log('Eyes Config', eyesConfig);
-
   pagesToCheck.forEach((route) => {
     it(`Visual Diff for ${route}`, () => {
       cy.eyesOpen(eyesConfig);

@@ -26,6 +26,14 @@ async function run() {
     octokit = github.getOctokit(githubToken);
   }
 
+  if ( octokit ) {
+    await octokit.repos.createCommitStatus({
+      ...context.repo,
+      sha: batchId,
+      state: 'pending'
+    });
+  }
+
   const baseUrl = core.getInput('baseUrl') || process.env.APPLITOOLS_BASE_URL;
   const sitemapUrl = core.getInput('sitemapUrl') || process.env.APPLITOOLS_SITEMAP_URL;
 
@@ -87,6 +95,8 @@ async function run() {
   let results;
   let errors = [];
 
+  console.log(`batchId: ${batchId}`)
+
   try {
     results = await cypress.run({
       browser: cypressBrowser,
@@ -117,6 +127,7 @@ async function run() {
       console.log('octokit');
       
       console.log('getting batch')
+      console.log(`batchId: ${batchId}`)
       const batchResults = await getBatchById(batchId);
       console.log('got batch')
       const { failedCount } = batchResults;
@@ -137,8 +148,26 @@ async function run() {
   }
 
   if ( errors.length > 0 ) {
+
+    if ( octokit ) {
+      await octokit.repos.createCommitStatus({
+        ...context.repo,
+        sha: batchId,
+        state: 'error'
+      });
+    }
+
     core.setFailed(errors.join(';'));
     return;
+  }
+
+
+  if ( octokit ) {
+    await octokit.repos.createCommitStatus({
+      ...context.repo,
+      sha: batchId,
+      state: 'success'
+    });
   }
 
   console.log(`${prefix} Success!`);
