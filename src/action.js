@@ -87,7 +87,7 @@ async function run() {
 
   const applitoolsConfig = {
     testConcurrency: concurrency && parseInt(concurrency),
-    // showLogs: true
+    showLogs: true
   }
 
   console.log(`${prefix} Writing applitools.config.js`);
