@@ -15,3 +15,17 @@ async function getBatchById(id) {
 }
 
 module.exports.getBatchById = getBatchById;
+
+/**
+ * getBatchByPointerId
+ */
+
+async function getBatchByPointerId(pointerId) {
+  const apiKey = process.env.APPLITOOLS_API_KEY;
+  const url = `https://${API_HOSTNAME}/api/Sessions/batches/${pointerId}/bypointerid?apiKey=${apiKey}`;
+  const response = await fetch(url);
+  const json = await response.json();
+  return json;
+}
+
+module.exports.getBatchByPointerId = getBatchByPointerId;

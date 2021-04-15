@@ -6,7 +6,7 @@ const github = require('@actions/github');
 const cypress = require('cypress');
 
 const { promiseToCrawl, promiseToGetAndReadSitemap } = require('./lib/util');
-const { getBatchById } = require('./lib/applitools');
+const { getBatchByPointerId } = require('./lib/applitools');
 
 const prefix = `[Applitools Eyes Action]`;
 
@@ -81,14 +81,13 @@ async function run() {
   }
 
   core.exportVariable('APPLITOOLS_API_KEY', key);
-  core.exportVariable('APPLITOOLS_BATCH_ID', 1234);
 
-  console.log('APPLITOOLS_BATCH_ID', process.env.APPLITOOLS_BATCH_ID);
+  if ( batchId ) {
+    core.exportVariable('APPLITOOLS_BATCH_ID', batchId);
+  }
 
   const applitoolsConfig = {
-    testConcurrency: concurrency && parseInt(concurrency),
-    batchId,
-    showLogs: true
+    testConcurrency: concurrency && parseInt(concurrency)
   }
 
   console.log(`${prefix} Writing applitools.config.js`);
@@ -127,7 +126,7 @@ async function run() {
     try {
       console.log('octokit');
       
-      const batchResults = await getBatchById(batchId);
+      const batchResults = await getBatchByPointerId(batchId);
       const { failedCount } = batchResults;
       console.log('batchResults', JSON.stringify(batchResults, null, 2))
 
