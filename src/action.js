@@ -142,15 +142,38 @@ async function run() {
       });
 
       if ( pull_request && pull_request.number ) {
+
+        const bodyReturn = "\n";
+        let bodyParts = [
+          '## <a href="https://info.applitools.com/udhLl"><img width="140" src="https://applitools.com/tutorials/logo.svg" alt="Applitools"></a>'
+        ];
+
+        if ( completedCount > 1 ) {
+          bodyParts.push(`${completedCount} visual tests have completed.`)
+        } else if ( completedCount === 1 ) {
+          bodyParts.push(`${completedCount} visual test has completed.`)
+        } else {
+          bodyParts.push(`No visual tests ran.`)
+        }
+
+        bodyParts.push(bodyReturn);
+
+        if ( completedCount > 0 ) {
+          bodyParts = bodyParts.concat([
+            `✅ Passed: ${passedCount} / ${completedCount}`,
+            `❌ Failed: ${failedCount} / ${completedCount}`,
+            `⚠️ Unresolved: ${unresolvedCount} / ${completedCount}`
+          ])
+        }
+
+        bodyParts.push(bodyReturn);
+
+        bodyParts.push('[Log in at applitools.com](https://info.applitools.com/udhLl) for more details!')
+
         await octokit.issues.createComment({
           ...context.repo,
           issue_number: pull_request.number,
-          body: `
-${completedCount} run(s) have completed!
----
-✅ Passed: ${passedCount}
-❌ Failed: ${failedCount}
-⚠️ Unresolved: ${unresolvedCount}`
+          body: bodyParts.join(bodyReturn)
         });
       }
     } catch(error) {
