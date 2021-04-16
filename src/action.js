@@ -10,6 +10,9 @@ const { getBatchByPointerId } = require('./lib/applitools');
 
 const prefix = `[Applitools Eyes Action]`;
 
+const applitoolsHomeUrl = 'https://info.applitools.com/udhLl'
+const apptliioolsLogoUrl = 'https://user-images.githubusercontent.com/1045274/115064087-822c9e80-9eba-11eb-9137-653bb32c9b0b.png';
+
 async function run() {
   const key = core.getInput('APPLITOOLS_API_KEY') || process.env.APPLITOOLS_API_KEY;
   const batchId = core.getInput('APPLITOOLS_BATCH_ID') || process.env.APPLITOOLS_BATCH_ID;
@@ -145,7 +148,7 @@ async function run() {
 
         const bodyReturn = "\n";
         let bodyParts = [
-          '## <a href="https://info.applitools.com/udhLl"><img width="140" src="https://applitools.com/tutorials/logo.svg" alt="Applitools"></a>'
+          `## <a href="${applitoolsHomeUrl}"><img width="140" src="${apptliioolsLogoUrl}" alt="Applitools"></a>`
         ];
 
         if ( completedCount > 1 ) {
@@ -168,7 +171,7 @@ async function run() {
 
         bodyParts.push(bodyReturn);
 
-        bodyParts.push('[Log in at applitools.com](https://info.applitools.com/udhLl) for more details!')
+        bodyParts.push(`[Log in at applitools.com](${applitoolsHomeUrl}) for more details!`)
 
         await octokit.issues.createComment({
           ...context.repo,
