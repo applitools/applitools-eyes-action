@@ -31,6 +31,8 @@ inputs:
   errorOnFailure:
     description: 'Set an error status if any tests fail'
     default: true
+  ignoreSelector:
+    description: 'A list of selectors to ignore during the visual test'
   maxDepth:
     description: 'How many steps deep do you want to crawl the given website?'
     default: 1
