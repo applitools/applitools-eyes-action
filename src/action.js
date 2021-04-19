@@ -55,6 +55,10 @@ async function run() {
   const maxDepth = core.getInput('maxDepth');
   const serverUrl = core.getInput('serverUrl') || process.env.APPLITOOLS_SERVER_URL;
 
+  console.log(`${prefix} --Start context--`);
+  console.log(JSON.stringify(context, null, 2));
+  console.log(`${prefix} --End context--`);
+
   let ignoreSelector = core.getInput('ignoreSelector');
   let pagesToCheck = [];
 
