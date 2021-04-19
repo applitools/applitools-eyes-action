@@ -19,7 +19,7 @@ async function run() {
   const githubToken = core.getInput('GITHUB_TOKEN') || process.env.GITHUB_TOKEN;
 
   const { context = {} } = github;
-  const { pull_request } = context.payload;
+  const { pull_request, head_ref, base_ref, repository } = context.payload;
   const isPullRequest = pull_request && pull_request.number;
   let octokit;
 
@@ -54,6 +54,7 @@ async function run() {
   const maxDepth = core.getInput('maxDepth');
   const serverUrl = core.getInput('serverUrl') || process.env.APPLITOOLS_SERVER_URL;
 
+  let ignoreSelector = core.getInput('ignoreSelector');
   let pagesToCheck = [];
 
   if ( baseUrl ) {
@@ -85,6 +86,8 @@ async function run() {
     }
   }
 
+  ignoreSelector = ignoreSelector ? ignoreSelector.split(',').map(selector => ({ selector: selector.trim() })) : []
+
   core.exportVariable('APPLITOOLS_API_KEY', key);
 
   if ( batchId ) {
@@ -92,13 +95,12 @@ async function run() {
   }
 
   const applitoolsConfig = {
-    testConcurrency: concurrency && parseInt(concurrency)
+    testConcurrency: concurrency && parseInt(concurrency),
+    baselineBranchName: `${repository}/${head_ref}`
   }
 
   if ( isPullRequest ) {
-    const { base, head } = pull_request;
-    applitoolsConfig.baselineBranchName = `${head.repo.full_name}/${head.ref}`;
-    applitoolsConfig.parentBranchName = `${base.repo.full_name}/${base.ref}`;
+    applitoolsConfig.parentBranchName = `${repository}/${base_ref}`;
   }
 
   console.log(`${prefix} --Start Applitools Config--`);
@@ -122,6 +124,7 @@ async function run() {
         APPLITOOLS_APP_NAME: appName,
         APPLITOOLS_BATCH_NAME: batchName,
         APPLITOOLS_SERVER_URL: serverUrl,
+        APPLITOOLS_IGNORE_SELECTOR: ignoreSelector,
         PAGES_TO_CHECK: pagesToCheck
       },
       headless: true,

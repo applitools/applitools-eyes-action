@@ -22,6 +22,8 @@ jobs:
         appName: 'Applitools Eyes Action'
         batchName: 'Colby Fayock Web'
         baseUrl: https://colbyfayock.com
+        ignoreSelector:
+        - .article-list
 
   sitemapUrl:
     runs-on: ubuntu-latest

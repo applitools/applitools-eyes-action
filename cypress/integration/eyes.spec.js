@@ -9,14 +9,17 @@ describe('Visual Regression Tests', () => {
     serverUrl: Cypress.env('APPLITOOLS_SERVER_URL'),
   }
 
+  const ignore = Cypress.env('APPLITOOLS_IGNORE_SELECTOR');
+
   pagesToCheck.forEach((route) => {
     it(`Visual Diff for ${route}`, () => {
       cy.eyesOpen(eyesConfig);
 
       cy.visit(route);
-      
+
       cy.eyesCheckWindow({
-        tag: route
+        tag: route,
+        ignore
       });
 
       cy.eyesClose();
