@@ -20,6 +20,7 @@ async function run() {
 
   const { context = {} } = github;
   const { pull_request } = context.payload;
+  const isPullRequest = pull_request && pull_request.number;
   let octokit;
 
   if ( !key ) {
@@ -94,8 +95,17 @@ async function run() {
     testConcurrency: concurrency && parseInt(concurrency)
   }
 
-  console.log(`${prefix} Writing applitools.config.js`);
+  if ( isPullRequest ) {
+    const { base, head } = pull_request;
+    applitoolsConfig.baselineBranchName = `${head.repo.full_name}/${head.ref}`;
+    applitoolsConfig.parentBranchName = `${base.repo.full_name}/${base.ref}`;
+  }
+
+  console.log(`${prefix} --Start Applitools Config--`);
   console.log(JSON.stringify(applitoolsConfig, null, 2));
+  console.log(`${prefix} --End Applitools config--`);
+
+  console.log(`${prefix} Writing applitools.config.js`);
 
   await fs.writeFile('./applitools.config.js', `module.exports = ${JSON.stringify(applitoolsConfig)}`, 'utf8');
 
@@ -128,8 +138,6 @@ async function run() {
 
   if ( octokit ) {
     try {
-      console.log('octokit');
-
       const batchResults = await waitFor200(() => getBatchByPointerId(batchId))
 
       console.log(`${prefix} --Start Applitools Results--`);
@@ -144,7 +152,7 @@ async function run() {
         state: failedCount > 0 ? 'failure' : 'success'
       });
 
-      if ( pull_request && pull_request.number ) {
+      if ( isPullRequest ) {
 
         const bodyReturn = "\n";
         let bodyParts = [
