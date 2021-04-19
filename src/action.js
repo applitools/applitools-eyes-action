@@ -19,8 +19,8 @@ async function run() {
   const githubToken = core.getInput('GITHUB_TOKEN') || process.env.GITHUB_TOKEN;
 
   const { context = {} } = github;
-  const { head_ref, base_ref, repository } = context;
-  const { pull_request } = context.payload;
+  const { ref } = context;
+  const { ref, pull_request, repository } = context.payload;
   const isPullRequest = pull_request && pull_request.number;
   let octokit;
 
@@ -101,11 +101,11 @@ async function run() {
 
   const applitoolsConfig = {
     testConcurrency: concurrency && parseInt(concurrency),
-    baselineBranchName: `${repository}/${head_ref}`
+    baselineBranchName: `${repository.full_name}/${ref.replace('refs/heads/', '')}`
   }
 
   if ( isPullRequest ) {
-    applitoolsConfig.parentBranchName = `${repository}/${base_ref}`;
+    applitoolsConfig.parentBranchName = `${repository.full_name}/`;
   }
 
   console.log(`${prefix} --Start Applitools Config--`);
