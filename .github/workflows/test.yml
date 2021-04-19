@@ -24,29 +24,29 @@ jobs:
         baseUrl: https://colbyfayock.com
         ignoreSelector: '.article-list'
 
-  sitemapUrl:
-    runs-on: ubuntu-latest
+  # sitemapUrl:
+  #   runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
-    - uses: './'
-      with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        APPLITOOLS_BATCH_ID: ${{ github.sha }}
-        appName: 'Applitools Eyes Action'
-        batchName: 'Next.js WordPress Starter'
-        sitemapUrl: https://next-wordpress-starter.netlify.app/sitemap.xml
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - uses: './'
+  #     with:
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       APPLITOOLS_BATCH_ID: ${{ github.sha }}
+  #       appName: 'Applitools Eyes Action'
+  #       batchName: 'Next.js WordPress Starter'
+  #       sitemapUrl: https://next-wordpress-starter.netlify.app/sitemap.xml
 
-  concurrency:
-    runs-on: ubuntu-latest
+  # concurrency:
+  #   runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
-    - uses: './'
-      with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        APPLITOOLS_BATCH_ID: ${{ github.sha }}
-        appName: 'Applitools Eyes Action'
-        batchName: 'Next.js WordPress Starter'
-        sitemapUrl: https://next-wordpress-starter.netlify.app/sitemap.xml
-        concurrency: 20
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - uses: './'
+  #     with:
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       APPLITOOLS_BATCH_ID: ${{ github.sha }}
+  #       appName: 'Applitools Eyes Action'
+  #       batchName: 'Next.js WordPress Starter'
+  #       sitemapUrl: https://next-wordpress-starter.netlify.app/sitemap.xml
+  #       concurrency: 20
