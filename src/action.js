@@ -19,8 +19,8 @@ async function run() {
   const githubToken = core.getInput('GITHUB_TOKEN') || process.env.GITHUB_TOKEN;
 
   const { context = {} } = github;
-  const { ref } = context;
-  const { ref, pull_request, repository } = context.payload;
+  const { ref = {}, payload = {} } = context;
+  const { pull_request, repository } = payload;
   const isPullRequest = pull_request && pull_request.number;
   let octokit;
 
