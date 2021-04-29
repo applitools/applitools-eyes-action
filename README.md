@@ -1,4 +1,4 @@
-# Applitools Eyes GitHub Action
+# 🧐 Applitools Eyes GitHub Action
 
 Instantly add AI-powered visual regression testing to your site with Applitools Eyes and GitHub Actions.
 
