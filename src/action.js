@@ -101,12 +101,14 @@ async function run() {
 
   const applitoolsConfig = {
     testConcurrency: concurrency && parseInt(concurrency),
-    branchName: `${repository.full_name}/${ref.replace('refs/heads/', '')}`,
     showLogs: true
   }
 
   if ( isPullRequest ) {
-    applitoolsConfig.parentBranchName = `${repository.full_name}/`;
+    applitoolsConfig.branchName = `${repository.full_name}/${pull_request.base.repo.name}/${pull_request.head.ref}`;
+    applitoolsConfig.parentBranchName = `${repository.full_name}/${pull_request.base.repo.name}/${pull_request.base.ref}`;
+  } else {
+    applitoolsConfig.branchName = `${repository.full_name}/${ref.replace('refs/heads/', '')}`;
   }
 
   console.log(`${prefix} --Start Applitools Config--`);
