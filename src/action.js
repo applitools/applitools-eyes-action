@@ -101,7 +101,7 @@ async function run() {
 
   const applitoolsConfig = {
     testConcurrency: concurrency && parseInt(concurrency),
-    baselineBranchName: `${repository.full_name}/${ref.replace('refs/heads/', '')}`,
+    branchName: `${repository.full_name}/${ref.replace('refs/heads/', '')}`,
     showLogs: true
   }
 

@@ -13,9 +13,9 @@ describe('Visual Regression Tests', () => {
 
   pagesToCheck.forEach((route) => {
     it(`Visual Diff for ${route}`, () => {
-      cy.eyesOpen(eyesConfig);
-
       cy.visit(route);
+
+      cy.eyesOpen(eyesConfig);
 
       cy.eyesCheckWindow({
         tag: route,
