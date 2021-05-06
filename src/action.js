@@ -117,6 +117,18 @@ async function run() {
 
   await fs.writeFile('./applitools.config.js', `module.exports = ${JSON.stringify(applitoolsConfig)}`, 'utf8');
 
+  const cypressEnv = {
+    APPLITOOLS_APP_NAME: appName,
+    APPLITOOLS_BATCH_NAME: batchName,
+    APPLITOOLS_SERVER_URL: serverUrl,
+    APPLITOOLS_IGNORE_SELECTOR: ignoreSelector,
+    PAGES_TO_CHECK: pagesToCheck
+  };
+
+  console.log(`${prefix} --Start Cypress Env--`);
+  console.log(JSON.stringify(cypressEnv, null, 2));
+  console.log(`${prefix} --End Cypress Env--`);
+
   let results;
   let errors = [];
 
@@ -126,13 +138,7 @@ async function run() {
       config: {
         baseUrl
       },
-      env: {
-        APPLITOOLS_APP_NAME: appName,
-        APPLITOOLS_BATCH_NAME: batchName,
-        APPLITOOLS_SERVER_URL: serverUrl,
-        APPLITOOLS_IGNORE_SELECTOR: ignoreSelector,
-        PAGES_TO_CHECK: pagesToCheck
-      },
+      env: cypressEnv,
       headless: true,
       record: false,
     });
