@@ -30,7 +30,7 @@ inputs:
     default: 'chrome'
   errorOnFailure:
     description: 'Set an error status if any tests fail'
-    default: true
+    default: false
   ignoreSelector:
     description: 'A list of selectors to ignore during the visual test'
   maxDepth:

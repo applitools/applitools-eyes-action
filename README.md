@@ -48,6 +48,7 @@ The following options can be used as parameters by using the `with` block in the
 | batchName           | No       | GitHub Action Workflow | Name of the batch of tests (for display purpose only).                |
 | concurrency         | No       | 5                      | Number of Eyes tests that this Runner will run concurrently           |
 | cypressBrowser      | No       | chrome                 | Browser Cypress uses to run tests                                     |
+| errorOnFailure      | No       | false                  | Set an error status if any tests fail                                 |
 | ignoreSelector      | No       | -                      | A list of selectors to ignore during the visual test                  |
 | maxDepth            | No       | 1                      | How many steps deep do you want to crawl the given website?           |
 | serverUrl           | No       | -                      | The URL of Eyes server                                                |
