@@ -49,12 +49,12 @@ async function run() {
 
   const appName = core.getInput('appName');
   const batchName = core.getInput('batchName');
-  const concurrency = core.getInput('concurrency');
+  const concurrency = parseInt(core.getInput('concurrency'));
   const cypressBrowser = core.getInput('cypressBrowser');
-  const errorOnFailure = core.getInput('errorOnFailure');
-  const maxDepth = core.getInput('maxDepth');
+  const errorOnFailure = `${core.getInput('errorOnFailure')}` === 'true';
+  const maxDepth = parseInt(core.getInput('maxDepth'));
   const serverUrl = core.getInput('serverUrl') || process.env.APPLITOOLS_SERVER_URL;
-  const showLogs = core.getInput('showLogs');
+  const showLogs = `${core.getInput('showLogs')}` === 'true';
 
   if ( showLogs ) {
     console.log(`${prefix} --Start context--`);
@@ -72,7 +72,7 @@ async function run() {
       pagesToCheck.push(baseUrl);
     } else {
       try {
-        console.log(`${prefix} Crawling ${baseUrl}`);
+        console.log(`${prefix} Crawling ${baseUrl} at a depth of ${maxDepth}`);
         const crawledPages = await promiseToCrawl({
           url: baseUrl,
           maxDepth
@@ -103,7 +103,7 @@ async function run() {
   }
 
   const applitoolsConfig = {
-    testConcurrency: concurrency && parseInt(concurrency),
+    testConcurrency: concurrency,
     // showLogs: true
   }
 
