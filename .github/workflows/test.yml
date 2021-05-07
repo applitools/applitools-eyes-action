@@ -23,6 +23,7 @@ jobs:
         batchName: 'Colby Fayock Web'
         baseUrl: https://colbyfayock.com
         ignoreSelector: '.article-list'
+        # showLogs: true
 
   # sitemapUrl:
   #   runs-on: ubuntu-latest

@@ -54,10 +54,13 @@ async function run() {
   const errorOnFailure = core.getInput('errorOnFailure');
   const maxDepth = core.getInput('maxDepth');
   const serverUrl = core.getInput('serverUrl') || process.env.APPLITOOLS_SERVER_URL;
+  const showLogs = core.getInput('showLogs');
 
-  console.log(`${prefix} --Start context--`);
-  console.log(JSON.stringify(context, null, 2));
-  console.log(`${prefix} --End context--`);
+  if ( showLogs ) {
+    console.log(`${prefix} --Start context--`);
+    console.log(JSON.stringify(context, null, 2));
+    console.log(`${prefix} --End context--`);
+  }
 
   let ignoreSelector = core.getInput('ignoreSelector');
   let pagesToCheck = [];
@@ -111,9 +114,11 @@ async function run() {
     applitoolsConfig.branchName = `${repository.full_name}/${ref.replace('refs/heads/', '')}`;
   }
 
-  console.log(`${prefix} --Start Applitools Config--`);
-  console.log(JSON.stringify(applitoolsConfig, null, 2));
-  console.log(`${prefix} --End Applitools config--`);
+  if ( showLogs ) {
+    console.log(`${prefix} --Start Applitools Config--`);
+    console.log(JSON.stringify(applitoolsConfig, null, 2));
+    console.log(`${prefix} --End Applitools config--`);
+  }
 
   console.log(`${prefix} Writing applitools.config.js`);
 
@@ -127,9 +132,11 @@ async function run() {
     PAGES_TO_CHECK: pagesToCheck
   };
 
-  console.log(`${prefix} --Start Cypress Env--`);
-  console.log(JSON.stringify(cypressEnv, null, 2));
-  console.log(`${prefix} --End Cypress Env--`);
+  if ( showLogs ) {
+    console.log(`${prefix} --Start Cypress Env--`);
+    console.log(JSON.stringify(cypressEnv, null, 2));
+    console.log(`${prefix} --End Cypress Env--`);
+  }
 
   let results;
   let errors = [];
@@ -145,9 +152,11 @@ async function run() {
       record: false,
     });
 
-    console.log(`${prefix} --Start Cypress Results--`);
-    console.log(JSON.stringify(results, null, 2));
-    console.log(`${prefix} --End Cypress Results--`);
+    if ( showLogs ) {
+      console.log(`${prefix} --Start Cypress Results--`);
+      console.log(JSON.stringify(results, null, 2));
+      console.log(`${prefix} --End Cypress Results--`);
+    }
   } catch(error) {
     errors.push(`Failed to run Eyes check: ${error.message}`)
   }
@@ -157,9 +166,11 @@ async function run() {
     try {
       const batchResults = await waitFor200(() => getBatchByPointerId(batchId))
 
-      console.log(`${prefix} --Start Applitools Results--`);
-      console.log(JSON.stringify(batchResults, null, 2))
-      console.log(`${prefix} --End Applitools Results--`);
+      if ( showLogs ) {
+        console.log(`${prefix} --Start Applitools Results--`);
+        console.log(JSON.stringify(batchResults, null, 2))
+        console.log(`${prefix} --End Applitools Results--`);
+      }
 
       const { completedCount, failedCount, passedCount, unresolvedCount } = batchResults;
 

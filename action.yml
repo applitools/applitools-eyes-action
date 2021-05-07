@@ -38,5 +38,8 @@ inputs:
     default: 1
   serverUrl:
     description: 'The URL of Eyes server'
+  showLogs:
+    description: 'Debug mode - shows Applitools Eyes logs, Cypress results, and GitHub logs'
+    default: false
   sitemapUrl:
     description: 'The URL of a website sitemap to be used for visual regression testing'
